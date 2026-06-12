@@ -1,7 +1,5 @@
 # Huntr Skills
 
-[![skills.sh](https://skills.sh/b/tryhuntr/huntr-skills)](https://skills.sh/tryhuntr/huntr-skills)
-
 Agent skills for **GTM engineers** using [Huntr](https://tryhuntr.com) — turn workflow recipes into production scripts with correct endpoints, pagination, rate limits, and cost guardrails.
 
 ## Quickstart
