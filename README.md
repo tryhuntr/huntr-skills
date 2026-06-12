@@ -42,6 +42,29 @@ npx skills add tryhuntr/huntr-skills --list
 
 Requires [Node.js](https://nodejs.org/) for `npx`.
 
+#### Install notes
+
+With `-g`, skills are copied to `~/.agents/skills/` and wired into each supported agent (Cursor, Claude Code, Codex, etc.). The installer may report **both** “Installed 6 skills” and “Failed to install 6” — that is normal.
+
+**PromptScript** does not support global (`-g`) installs. If you see:
+
+```text
+✗ huntr-icp-list-build → PromptScript: PromptScript does not support global skill installation
+```
+
+you can **ignore it** unless you use PromptScript. Cursor, Claude Code, and Codex still install correctly.
+
+To skip unsupported agents and avoid those messages, target only what you use:
+
+```bash
+npx skills add tryhuntr/huntr-skills -g -y \
+  -a cursor \
+  -a claude-code \
+  -a codex
+```
+
+After install, start a **new** agent session so skills are picked up.
+
 ### 2. Git clone + manual copy
 
 ```bash
