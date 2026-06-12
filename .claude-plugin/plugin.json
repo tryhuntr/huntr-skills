@@ -1,0 +1,18 @@
+{
+  "name": "huntr-skills",
+  "version": "1.0.0",
+  "description": "Agent skills for GTM engineers using Huntr — ICP lists, outbound pipelines, account research, signal scanning, and integration review.",
+  "author": { "name": "Huntr", "url": "https://tryhuntr.com" },
+  "homepage": "https://github.com/tryhuntr/skills",
+  "repository": "https://github.com/tryhuntr/skills",
+  "license": "MIT",
+  "keywords": ["huntr", "gtm", "research", "outbound", "revops", "skills", "claude-code"],
+  "skills": [
+    "./skills/huntr-icp-list-build",
+    "./skills/huntr-outbound-pipeline",
+    "./skills/huntr-account-research",
+    "./skills/huntr-signal-scanner",
+    "./skills/huntr-account-penetration",
+    "./skills/huntr-workflow-review"
+  ]
+}
