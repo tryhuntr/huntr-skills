@@ -1,25 +1,25 @@
 # Huntr Skills
 
-[![skills.sh](https://skills.sh/b/tryhuntr/skills)](https://skills.sh/tryhuntr/skills)
+[![skills.sh](https://skills.sh/b/tryhuntr/huntr-skills)](https://skills.sh/tryhuntr/huntr-skills)
 
 Agent skills for **GTM engineers** using [Huntr](https://tryhuntr.com) — turn workflow recipes into production scripts with correct endpoints, pagination, rate limits, and cost guardrails.
 
 ## Quickstart
 
 ```bash
-npx skills add tryhuntr/skills -g -y
+npx skills add tryhuntr/huntr-skills -g -y
 ```
 
 Install one skill:
 
 ```bash
-npx skills add tryhuntr/skills --skill huntr-outbound-pipeline -g -y
+npx skills add tryhuntr/huntr-skills --skill huntr-outbound-pipeline -g -y
 ```
 
 List skills:
 
 ```bash
-npx skills add tryhuntr/skills --list
+npx skills add tryhuntr/huntr-skills --list
 ```
 
 Requires `HUNTR_API_KEY` in your environment. Get a key at [tryhuntr.com/dashboard](https://tryhuntr.com/dashboard).
