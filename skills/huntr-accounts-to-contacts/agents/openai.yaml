@@ -1,0 +1,13 @@
+interface:
+  display_name: "Accounts to Contacts"
+  short_description: "Turn account lists into buyer contacts"
+  default_prompt: "Use $huntr-accounts-to-contacts to find target contacts across my company list and save the results to CSV."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "huntr"
+      description: "Huntr MCP server"
+      transport: "streamable_http"
+      url: "https://api.tryhuntr.com/mcp"
+policy:
+  allow_implicit_invocation: true

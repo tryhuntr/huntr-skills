@@ -1,0 +1,13 @@
+interface:
+  display_name: "Find and Enrich Contact"
+  short_description: "Resolve profiles and professional emails"
+  default_prompt: "Use $huntr-find-and-enrich-contact to resolve and enrich these people, then save every result to CSV."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "huntr"
+      description: "Huntr MCP server"
+      transport: "streamable_http"
+      url: "https://api.tryhuntr.com/mcp"
+policy:
+  allow_implicit_invocation: true

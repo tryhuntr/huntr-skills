@@ -1,0 +1,13 @@
+interface:
+  display_name: "LinkedIn Engagers to Leads"
+  short_description: "Turn post engagement into enriched leads"
+  default_prompt: "Use $huntr-linkedin-engagers-to-leads to export and enrich people engaging with this LinkedIn post."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "huntr"
+      description: "Huntr MCP server"
+      transport: "streamable_http"
+      url: "https://api.tryhuntr.com/mcp"
+policy:
+  allow_implicit_invocation: true

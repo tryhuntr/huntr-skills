@@ -1,0 +1,13 @@
+interface:
+  display_name: "Build Target List"
+  short_description: "Build accounts, buyers, and work emails"
+  default_prompt: "Use $huntr-build-target-list to build an outreach-ready prospect list and save every result to CSV."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "huntr"
+      description: "Huntr MCP server"
+      transport: "streamable_http"
+      url: "https://api.tryhuntr.com/mcp"
+policy:
+  allow_implicit_invocation: true

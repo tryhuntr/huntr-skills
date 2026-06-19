@@ -1,0 +1,13 @@
+interface:
+  display_name: "Intent List to Contacts"
+  short_description: "Turn intent files into prioritized contacts"
+  default_prompt: "Use $huntr-intent-list-to-contacts to triage this intent CSV and produce a prioritized outreach list."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "huntr"
+      description: "Huntr MCP server"
+      transport: "streamable_http"
+      url: "https://api.tryhuntr.com/mcp"
+policy:
+  allow_implicit_invocation: true

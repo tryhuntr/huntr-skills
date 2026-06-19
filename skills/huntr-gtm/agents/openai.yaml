@@ -1,0 +1,13 @@
+interface:
+  display_name: "Huntr GTM"
+  short_description: "Plan and execute any supported Huntr workflow"
+  default_prompt: "Use $huntr-gtm to plan and execute my GTM data request with Huntr, updating CSV after every result."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "huntr"
+      description: "Authenticated Huntr MCP server for GTM search, enrichment, LinkedIn activity, web data, and research"
+      transport: "streamable_http"
+      url: "https://api.tryhuntr.com/mcp"
+policy:
+  allow_implicit_invocation: true

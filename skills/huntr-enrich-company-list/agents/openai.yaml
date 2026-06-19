@@ -1,0 +1,13 @@
+interface:
+  display_name: "Enrich Company List"
+  short_description: "Append company, stack, jobs, and contacts"
+  default_prompt: "Use $huntr-enrich-company-list to enrich my company list with selected intelligence and save all results to CSV."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "huntr"
+      description: "Huntr MCP server"
+      transport: "streamable_http"
+      url: "https://api.tryhuntr.com/mcp"
+policy:
+  allow_implicit_invocation: true
