@@ -114,7 +114,7 @@ Explicit `$skill-name` invocation is best when you want a specific workflow.
 
 | You want to… | Use |
 | --- | --- |
-| Submit a broad or unusual Huntr request | [`$huntr-gtm`](./skills/huntr-gtm/SKILL.md) |
+| Describe the data you want and let Huntr build the complete plan | [`$huntr-gtm`](./skills/huntr-gtm/SKILL.md) |
 | Start from an ICP and build companies plus buyers | [`$huntr-build-target-list`](./skills/huntr-build-target-list/SKILL.md) |
 | Start from a company list and find people | [`$huntr-accounts-to-contacts`](./skills/huntr-accounts-to-contacts/SKILL.md) |
 | Find or enrich named people or LinkedIn profiles | [`$huntr-find-and-enrich-contact`](./skills/huntr-find-and-enrich-contact/SKILL.md) |
@@ -126,9 +126,9 @@ When unsure, use `$huntr-gtm`. It evaluates the prompt against the live Huntr MC
 
 ## Skills
 
-### `huntr-gtm` — universal Huntr planner
+### `huntr-gtm` — describe what you need
 
-Use this for any Huntr-supported GTM data or research objective, particularly when the request combines several operations or does not fit a focused skill.
+Use this when you want to describe the finished result in plain language and let Huntr choose the necessary search, enrichment, LinkedIn, web, and research steps.
 
 **You provide:** a plain-language outcome, target count, criteria, requested fields, and optionally a CSV.
 
