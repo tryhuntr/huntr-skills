@@ -1,6 +1,6 @@
 # Huntr Skills
 
-Describe the GTM data you need. Huntr selects the appropriate search, enrichment, LinkedIn, web, and research tools; shows the maximum cost; waits for approval; executes the plan; and updates CSV files after every result.
+Describe the GTM data you need. Huntr inspects the live search, enrichment, LinkedIn, web, and research tools; suggests relevant operations; lets you compose the workflow; shows the maximum cost; waits for approval; executes it; and updates CSV files after every result.
 
 These skills work with Huntr MCP in Codex, Claude Code, Cursor, and other compatible agents.
 
@@ -11,11 +11,12 @@ Every Huntr workflow follows the same safety model:
 1. Understand the requested outcome and required columns.
 2. Inspect the currently available Huntr MCP tools and pricing.
 3. Explain which requirements are directly supported, require post-processing, or are unsupported.
-4. Show the tool plan, output files, and maximum cost.
-5. Wait for explicit approval before paid calls.
-6. Create CSV output before paid execution.
-7. Update and flush CSV after every individual Huntr result.
-8. Return completed files, coverage statistics, cost, caveats, and a resume point.
+4. Suggest relevant live operations and let you select the workflow steps.
+5. Validate dependencies, show output files, and calculate the maximum cost.
+6. Wait for explicit approval before paid calls.
+7. Create CSV output before paid execution.
+8. Update and flush CSV after every individual Huntr result.
+9. Return completed files, coverage statistics, cost, caveats, and a resume point.
 
 Completed rows are never intentionally rerun. Empty results, failures, skipped rows, ambiguous matches, and duplicates remain in the CSV so nothing is silently lost.
 
@@ -128,7 +129,7 @@ Explicit `$skill-name` invocation is best when you want a specific workflow.
 
 | You want to… | Use |
 | --- | --- |
-| Describe the data you want and let Huntr build the complete plan | [`$huntr-gtm`](./skills/huntr-gtm/SKILL.md) |
+| Compose a custom workflow from the live Huntr MCP operations | [`$huntr-gtm`](./skills/huntr-gtm/SKILL.md) |
 | Start from an ICP and build companies plus buyers | [`$huntr-build-target-list`](./skills/huntr-build-target-list/SKILL.md) |
 | Start from a company list and find people | [`$huntr-accounts-to-contacts`](./skills/huntr-accounts-to-contacts/SKILL.md) |
 | Find or enrich named people or LinkedIn profiles | [`$huntr-find-and-enrich-contact`](./skills/huntr-find-and-enrich-contact/SKILL.md) |
@@ -136,28 +137,28 @@ Explicit `$skill-name` invocation is best when you want a specific workflow.
 | Turn LinkedIn post engagement into leads | [`$huntr-linkedin-engagers-to-leads`](./skills/huntr-linkedin-engagers-to-leads/SKILL.md) |
 | Turn visitor, event, intent, or scored-account data into contacts | [`$huntr-intent-list-to-contacts`](./skills/huntr-intent-list-to-contacts/SKILL.md) |
 
-When unsure, use `$huntr-gtm`. It evaluates the prompt against the live Huntr MCP tools and builds the appropriate plan.
+When unsure, use `$huntr-gtm`. It suggests relevant live Huntr MCP operations, lets you add or remove steps, validates dependencies, and prices the workflow before execution.
 
 ## Skills
 
-### `huntr-gtm` — describe what you need
+### `huntr-gtm` — compose a custom Huntr workflow
 
-Use this when you want to describe the finished result in plain language and let Huntr choose the necessary search, enrichment, LinkedIn, web, and research steps.
+Use this when you want to describe an objective, inspect the relevant live Huntr operations, and choose the exact search, enrichment, LinkedIn, web, or research steps to run.
 
-**You provide:** a plain-language outcome, target count, criteria, requested fields, and optionally a CSV.
+**You provide:** a plain-language objective, target count, criteria, known identifiers, and optionally a CSV.
 
-**It can combine:** company and people search, professional profiles, work emails, company intelligence, LinkedIn activity, page extraction, and bounded research.
+**It does:** inspect live tools, schemas, and pricing; suggest relevant operations without selecting them; expose the complete operation catalog on request; validate selected dependencies and limits; quote the maximum cost; and execute only after approval.
 
 **You receive:** one or more linked CSV files, execution summary, coverage, actual cost, limitations, and resume state.
 
 Example:
 
 ```text
-Use $huntr-gtm to find US fintech companies, identify VP Marketing leaders,
-enrich work emails, segment by employee count, and save every result to CSV.
+Use $huntr-gtm to find US fintech companies and VP Marketing leaders. Show me
+the available enrichment operations so I can compose the workflow.
 ```
 
-The skill accepts any prompt but executes only capabilities currently available through Huntr MCP. CRM updates, email sequencing, and external campaign delivery are outside Huntr.
+The skill is standalone and does not route to other skills. It executes only capabilities currently available through Huntr MCP. CRM updates, email sequencing, and external campaign delivery are outside Huntr.
 
 ### `huntr-build-target-list`
 
