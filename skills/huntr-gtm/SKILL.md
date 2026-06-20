@@ -48,6 +48,9 @@ If Huntr is unavailable or unauthorized:
 8. Create durable CSV output before the first paid call.
 9. Update and flush CSV state after every individual Huntr result.
 10. Never discard failures, empty results, duplicates, unsupported items, or partial work.
+11. Never infer optional paid enrichment from an intended downstream use such as cold email, outreach, prospecting, or account research.
+12. Never invent a candidate buffer, over-fetch count, or enrichment-attempt limit. Explain why one is needed and obtain approval for its exact ceiling.
+13. Never describe a CSV column as enrichment. A selected enrichment must map to an explicit tool call in the quoted and executed plan.
 
 ## Phase 1: understand the request
 
@@ -65,12 +68,62 @@ Extract:
 
 Ask only questions required to build a defensible plan. Do not ask users which endpoints to call.
 
+Resolve requested output and enrichment before calling `get_pricing`, count tools, or other planning tools beyond the connection-gate `get_balance` call. Separate:
+
+- fields returned by the necessary discovery search;
+- optional paid person enrichment such as a resolved LinkedIn URL, full professional profile, or work email;
+- optional paid company enrichment such as LinkedIn company data, technology, contacts, jobs, or posts.
+
+An intended use is not an enrichment request. In particular, phrases such as "for cold email", "for outreach", "build a prospect list", or "sales leads" describe the business outcome but do not authorize `person_email`, `person_linkedin`, or company enrichment. Ask which optional enrichments the user wants.
+
+### Required enrichment picker
+
+When optional enrichment has not been explicitly selected, pause before pricing and present a multi-select picker. Use native choice controls when the host supports them. Otherwise show this compact numbered checklist and ask the user to select any combination:
+
+```text
+Choose enrichments (reply with numbers, for example: 1,3):
+[ ] 1. Work email
+[ ] 2. LinkedIn profile URL
+[ ] 3. Full LinkedIn profile
+[ ] 4. Company details
+[ ] 5. Technology stack
+[ ] 6. Public company contacts
+[ ] 7. Active jobs
+[ ] 8. Recent company LinkedIn posts
+[ ] 9. None — discovery results only
+```
+
+Show only options relevant to the requested entity type and available live tools. Keep "None" available and mutually exclusive with all enrichments. Do not call pricing or count tools until the user answers, unless the user already named the exact enrichment.
+
+Map every selection explicitly:
+
+- Work email → `person_email`
+- LinkedIn profile URL → `person_linkedin_url` only when discovery does not already return a usable URL
+- Full LinkedIn profile → `person_linkedin`
+- Company details → `linkedin_company`
+- Technology stack → `tech_stack`
+- Public company contacts → `company_contact`
+- Active jobs → `job_postings`
+- Recent company LinkedIn posts → `company_linkedin_posts`
+
+Do not use the ambiguous label "LinkedIn" by itself. Distinguish a LinkedIn URL from full profile enrichment. If discovery already returns a LinkedIn URL, label it as a discovery field and do not claim that LinkedIn enrichment occurred. If the user selects full profile enrichment, include and execute `person_linkedin` for each approved eligible person.
+
+When work email may be desired, clarify the stopping condition:
+
+- a requested number of matching people, with email attempted for each; or
+- a requested number of people with successfully found work emails.
+
+The second option requires a user-approved candidate and email-attempt ceiling because email availability is not guaranteed. Do not choose that ceiling on the user's behalf.
+
+Apply location criteria to the entity the user named. "Founders of USA companies" constrains company location, not founder location. Add a person-location filter only when the user explicitly requests one or confirms an ambiguity.
+
 If the request is vague, ask for the smallest missing constraint. Examples:
 
 - desired company profile;
 - target people roles;
 - number of records;
 - requested enrichments;
+- whether the target count means discovered records or records with successful enrichment;
 - definition of an ambiguous phrase.
 
 ## Phase 2: inspect and classify
@@ -158,6 +211,8 @@ Account for:
 - ambiguous identifiers;
 - partial completion.
 
+If downstream enrichment may return `not_found`, define the stopping condition and maximum upstream candidates with the user. Do not add an unrequested search buffer merely to improve the chance of reaching a final enriched-record count.
+
 Prefer free count calls before paid searches. A paid sample or probe also requires approval.
 
 ## Phase 5: prepare CSV state
@@ -233,6 +288,16 @@ Present:
 - current balance;
 - current conditional billing behavior.
 
+List each optional enrichment separately with its maximum calls and cost. Do not bundle inferred enrichment into a generic phrase such as "outreach-ready" or "for cold email."
+
+Include an enrichment mapping in the quote:
+
+```text
+Selected enrichment → tool → maximum calls → output columns → maximum cost
+```
+
+Before asking for approval, verify that every selected enrichment appears as a concrete tool step and every unselected enrichment is absent. A field merely returned by discovery must be labeled "included in discovery", not presented as a separate enrichment.
+
 Ask for explicit approval of the concrete scope and maximum cost.
 
 If balance is insufficient, calculate a smaller executable scope and wait for the user to choose.
@@ -243,14 +308,16 @@ External writes or integrations are outside this skill and must not be implied b
 
 After approval:
 
-1. execute independent steps concurrently only when safe;
-2. respect live pagination, batch, and rate limits;
-3. update CSV after every result;
-4. deduplicate before repeated enrichment;
-5. track actual cost from responses where available;
-6. continue independent rows after a row-level failure;
-7. mark dependency-blocked rows `skipped`;
-8. stop before a call that could exceed the approved maximum.
+1. execute every selected and approved enrichment step;
+2. do not execute unselected enrichment;
+3. execute independent steps concurrently only when safe;
+4. respect live pagination, batch, and rate limits;
+5. update CSV after every result;
+6. deduplicate before repeated enrichment;
+7. track actual cost from responses where available;
+8. continue independent rows after a row-level failure;
+9. mark dependency-blocked rows `skipped`;
+10. stop before a call that could exceed the approved maximum.
 
 Do not retry a paid call unless it was clearly not charged or the user approves retry risk. Never rerun completed rows.
 

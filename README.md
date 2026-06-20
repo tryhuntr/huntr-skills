@@ -21,6 +21,22 @@ Completed rows are never intentionally rerun. Empty results, failures, skipped r
 
 ## Quick start
 
+### Prerequisites
+
+Installing these skills does not connect your agent to Huntr. Skills contain workflow instructions; Huntr MCP provides the tools that perform search, enrichment, LinkedIn, web, research, pricing, and account operations. Both are required.
+
+Complete setup in this order:
+
+1. Get a Huntr API key from [tryhuntr.com/dashboard](https://tryhuntr.com/dashboard).
+2. Install the Huntr Skills.
+3. Connect Huntr MCP in your agent using the instructions below.
+4. Start a completely new agent session so it loads both the MCP connection and the installed skills.
+5. Verify that Huntr MCP is available, then invoke a skill such as `$huntr-gtm`.
+
+Do not skip the new-session step. A session that was already running during installation or MCP configuration may not discover the new skills or Huntr tools. If a skill reports that Huntr MCP is unavailable, confirm the MCP configuration, restart the agent, and try again.
+
+Keep your API key in your agent's MCP configuration. Never paste it into chat, prompts, CSV files, source code, or commits.
+
 ### 1. Install
 
 Install all seven skills globally:
@@ -48,12 +64,10 @@ Add to `~/.codex/config.toml`:
 ```toml
 [mcp_servers.huntr]
 url = "https://api.tryhuntr.com/mcp"
-
-[mcp_servers.huntr.headers]
-x-api-key = "hntr_YOUR_KEY"
+http_headers = { "x-api-key" = "hntr_YOUR_KEY" }
 ```
 
-Start a new Codex session.
+Run `codex mcp get huntr` and confirm it reports configured `http_headers`, then start a new Codex session.
 
 #### Claude Code
 
